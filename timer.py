@@ -7,4 +7,4 @@ def timer(h,m,s):
     if i%10==0:
       print("{}秒経過".format(i))
   print("終了です")
-  return True
+  # serialしたい

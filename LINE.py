@@ -1,5 +1,7 @@
 from flask import Flask, request, abort
 import os
+import re
+import timer
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -42,14 +44,44 @@ def callback():
   return 'OK'
 
 
-def create_reply(received_message):
-  return received_message + "にゃん"
+def create_reply_and_times(received_message):
+  units_ja = ["時間", "分", "秒"]
+  times = [0,0,0]
+  message = ""
+
+  for i,unit in enumerate(units_ja):
+    pattern = "[0-9]"+unit
+    print("p:{} m:{}".format(pattern,received_message))
+    time_strings = re.findall(pattern, received_message)
+    if len(time_strings) > 1:
+      time = [0,0,0]
+      break
+    if time_strings:
+      time_string = time_strings[0]
+      times[i] = int(time_string.replace(unit,""))
+
+
+  for time,unit in zip(times,units_ja):
+    if time:
+      message += str(time)+unit
+  if message:
+    message += "後におしらせするニャ！"
+  else:
+    message = "にゃーん"
+    times = None
+  return (message,times)
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-  received_message = event.message.text
+  received_message,times = event.message.text
   message = create_reply(received_message)
   line_bot_api.reply_message(
+    event.reply_token,
+    TextSendMessage(text=message))
+  if times:
+    timer.timer(*times)
+   line_bot_api.reply_message(
     event.reply_token,
     TextSendMessage(text=message))
 
