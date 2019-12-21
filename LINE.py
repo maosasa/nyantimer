@@ -41,12 +41,17 @@ def callback():
 
   return 'OK'
 
+
+def create_reply(received_message):
+  return received_message + "にゃん"
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-  
+  received_message = event.message.text
+  message = create_reply(received_message)
   line_bot_api.reply_message(
     event.reply_token,
-    TextSendMessage(text=event.message.text+"にゃ"))
+    TextSendMessage(text=message))
 
 if __name__ == "__main__":
 #    app.run()
