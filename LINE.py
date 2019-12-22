@@ -75,7 +75,7 @@ def create_reply_and_times(received_message):
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
   received_message = event.message.text
-  message,times = create_reply(received_message)
+  message,times = create_reply_and_times(received_message)
   line_bot_api.reply_message(
     event.reply_token,
     TextSendMessage(text=message))
