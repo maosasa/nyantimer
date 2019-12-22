@@ -44,6 +44,7 @@ def callback():
   return 'OK'
 
 
+
 def create_reply_and_times(received_message):
   units_ja = ["時間", "分", "秒"]
   times = [0,0,0]
@@ -71,14 +72,21 @@ def create_reply_and_times(received_message):
     times = None
   return (message,times)
 
+def post_later(times, userid):
+  timer.timer(*times)
+  line_bot_api.push_message(userid, TextSendMessage(text='時間が来たニャ！'))
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
   received_message = event.message.text
+  userid = event.source.userId
   message,times = create_reply_and_times(received_message)
   line_bot_api.reply_message(
     event.reply_token,
     TextSendMessage(text=message))
+  if times:
+    post_later(times, userid)
 
 if __name__ == "__main__":
 #    app.run()
