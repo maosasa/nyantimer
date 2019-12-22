@@ -87,8 +87,7 @@ def handle_message(event):
     event.reply_token,
     TextSendMessage(text=message))
   if times:
-    #post_later(times, userid)
-    pass
+    post_later(times, userid)
 
 if __name__ == "__main__":
 #    app.run()
