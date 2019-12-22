@@ -80,7 +80,7 @@ def post_later(times, userid):
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
   received_message = event.message.text
-  userid = event.source.userId
+  userid = event.source.user_id
   print(userid)
   message,times = create_reply_and_times(received_message)
   line_bot_api.reply_message(
