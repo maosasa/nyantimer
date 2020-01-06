@@ -55,10 +55,10 @@ def handle_message(event):
   received_message = event.message.text
   userid = event.source.user_id
   print(userid)
-  message,times = message.create_reply_and_times(received_message)
+  reply_message,times = message.create_reply_and_times(received_message)
   line_bot_api.reply_message(
     event.reply_token,
-    TextSendMessage(text=message))
+    TextSendMessage(text=reply_message))
   if times:
     post_later(times, userid)
 
