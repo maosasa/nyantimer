@@ -3,6 +3,7 @@ import os
 import re
 import timer
 import message
+import serial_arduino
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -48,6 +49,7 @@ def callback():
 def post_later(times, userid):
   timer.timer(*times)
   line_bot_api.push_message(userid, TextSendMessage(text='時間が来たニャ！'))
+  serial_arduino.send_serial()
 
 
 @handler.add(MessageEvent, message=TextMessage)
