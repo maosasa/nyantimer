@@ -4,6 +4,7 @@ import re
 import timer
 import message
 import serial_arduino
+import music
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -46,10 +47,12 @@ def callback():
   return 'OK'
 
 
-def post_later(times, userid):
+def post_later(times, userid, ser):
   timer.timer(*times)
   line_bot_api.push_message(userid, TextSendMessage(text='時間が来たニャ！'))
-  serial_arduino.send_serial()
+  serial_arduino.send_serial(ser)
+  music.play_music()
+  music.play_music()
 
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -63,7 +66,8 @@ def handle_message(event):
     event.reply_token,
     TextSendMessage(text=reply_message))
   if times:
-    post_later(times, userid)
+    ser = serial_arduino.init_serial()
+    post_later(times, userid, ser)
 
 if __name__ == "__main__":
 #    app.run()

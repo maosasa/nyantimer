@@ -31,6 +31,8 @@ def get_time_string(times):
 def create_reply_and_times(received_message):
   times =  get_time_from_message(received_message)
   message = get_time_string(times)
+  if times in [[0,0,1],[0,0,2]]:
+    message=""
   if message:
     message += "後におしらせするニャ！"
   else:
