@@ -1,6 +1,6 @@
 # nyantimer
 
-##LINEbot用サーバーの立て方
+## LINEbot用サーバーの立て方
 
 $ flask run --host=0.0.0.0
 
