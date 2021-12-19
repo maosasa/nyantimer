@@ -1,5 +1,8 @@
 # nyantimer
 
+## 発表スライド
+https://docs.google.com/presentation/d/14az7isRhnPkKKDXRhR4REKF8Wde2Nsk8l6ScK2bKGqE/edit?usp=sharing
+
 ## LINEbot用サーバーの立て方
 
 $ flask run --host=0.0.0.0
